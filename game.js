@@ -10,7 +10,7 @@ const cv = document.getElementById('c'), ctx = cv.getContext('2d');
 cv.width = 1600; cv.height = 900; ctx.scale(2, 2);
 const $ = id => document.getElementById(id);
 const LW = 800, LH = 450, WORLD_W = 2600;
-const G = 1600, SPEED = 230, JUMP = 520, WARN = 0.6;
+const G = 1500, SPEED = 245, JUMP = 560, WARN = 0.7;
 const DUR = { grav: 3, inv: 4, col: 5 };
 const LABEL = { grav: 'GRAV', inv: 'INVERT', col: 'COLOR' };
 const TOAST = { grav: 'GRAVITY GLITCH!', inv: 'CONTROLS SCRAMBLE!', col: 'COLOR GLITCH!' };
@@ -54,7 +54,7 @@ try { user = localStorage.getItem('glitch-user'); } catch (e) {}
 loadAch();
 let bestRec = [], bestTime = Infinity;
 let p, gdir, T, PW, rec, frame, runT, flipsRun, ghostCh, immune, recov, groundSolid, deadT;
-let deaths, glitches, bugFound, lives = 3, maxX = 0, lastTime = 0, lastStats = '';
+let deaths = 0, glitches = 0, bugFound = false, lives = 3, maxX = 0, lastTime = 0, lastStats = '';
 let camX = 0, shake = 0, parts = [], jumpQ = false, inL = false, inR = false;
 let toastTimer = 0, tt;
 let ac = null;
@@ -343,7 +343,7 @@ let lvl = 1, wasPlaying = false;
 const GNAME = { runner: 'Glitch Runner', heist: 'Vibe Heist', cafe: 'Spirit Café' };
 const HDEATH = ['Spotted by a guard 👀', 'Alarm triggered 🚨', 'Too loud, too slow', 'The guard saw you, bro'];
 function pauseGame() { wasPlaying = st === 'play'; showStage('exit'); }
-const LVL_SPD = [1, 1.2, 1.35];
+const LVL_SPD = [1, 1.28, 1.5];
 const CAFE_LV = [{target:8,pat:14,spawn:2.8},{target:12,pat:12,spawn:2.2},{target:16,pat:10,spawn:1.8}];
 const HEIST_LV = [
   {guards:[{a:[260,60],b:[260,220]},{a:[470,420],b:[470,250]}], spd:45},
@@ -380,6 +380,7 @@ function renderLevels() {
     $('levelsel').appendChild(b);
   });
   const nb = document.createElement('button');
+  nb.className = 'main start-run';
   nb.textContent = 'Start run ▶';
   nb.onclick = startRun;
   $('levelsel').appendChild(nb);
@@ -547,7 +548,11 @@ function drawGame(now) {
 }
 
 function startRun() {
-  if (!user) { toast('Log in first', 1500); return; }
+  if (!user) {
+    showStage('auth');
+    $('authMsg').textContent = 'Log in or sign up to start a run.';
+    return;
+  }
   toast('← → to run · Space to jump', 2500);
   newAttempt();
   $('menu').style.display = 'none';
@@ -659,13 +664,15 @@ function update(dt) {
   const inv = T.inv > 0;
   let dir = (inR ? 1 : 0) - (inL ? 1 : 0);
   if (inv) dir = -dir;
-  p.vx = dir * SPEED * LVL_SPD[lvl - 1] * (recov > 0 ? 0.5 : 1);
+  const mobileBoost = window.matchMedia('(pointer: coarse)').matches ? 1.12 : 1;
+  p.vx = dir * SPEED * LVL_SPD[lvl - 1] * mobileBoost * (recov > 0 ? 0.5 : 1);
 
   if (jumpQ) {
     jumpQ = false;
     if (p.g) {
       const mult = char === 'over' ? 1.2 : 1;
-      p.vy = -JUMP * mult * gdir;
+      const screenBoost = window.innerWidth < 700 ? 1.06 : 1;
+      p.vy = -JUMP * mult * screenBoost * gdir;
       p.g = false;
       sfx('jump');
       if (inv) achieve('blind');
