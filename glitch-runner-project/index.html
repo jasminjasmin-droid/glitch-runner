@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glitch Runner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="wrap">
+  <canvas id="c"></canvas>
+  <button id="mute" class="ghost" style="position:absolute;top:8px;right:8px;z-index:9;padding:4px 12px;font-size:16px">🔊</button>
+  <div id="hud"><span id="hTime">⏱ 0.0s</span><span id="hGl"></span><span id="hDeaths">☠ 0</span></div>
+  <div id="toast"></div>
+  <div id="touch">
+    <button id="bL">◀</button><button id="bJ" class="j">JUMP</button><button id="bR">▶</button>
+  </div>
+  <div id="menu" class="screen">
+    <button id="mute2" class="ghost" style="position:absolute;top:10px;right:10px;padding:4px 12px;font-size:16px">🔊</button>
+    <div id="leaves"></div>
+    <div class="logo" id="logo"></div>
+    <p>Run the jungle hills. Gravity flips, controls scramble, and thorn hills wait for you. Stack two glitches to open the gate and find the bug.</p>
+    <div id="login" style="display:flex;flex-direction:column;gap:8px;align-items:center"></div>
+    <div id="exitsel" style="display:none;flex-direction:column;gap:12px;align-items:center"></div>
+    <div class="cards" id="levelsel" style="display:none"></div>
+    <div class="cards" id="gamesel" style="display:none">
+      <button class="card sel" id="gA"><b>Glitch Runner</b><small>Playable now: jungle hills, glitches, and a secret bug.</small></button>
+      <button class="card" id="gB"><b>Vibe Heist</b><small>Stealth: dodge guard vision and steal 3 gems.</small></button>
+      <button class="card" id="gC"><b>Spirit Café</b><small>Serve ghost customers their drinks before they fade.</small></button>
+    </div>
+    <div class="cards" id="cards"></div>
+    <button class="main" id="landBtn">Play ▶</button>
+    <button class="ghost" id="outBtn" style="display:none">Log out</button>
+    <button class="ghost" id="exitBtn">Exit</button>
+    <button class="ghost" id="backBtn" style="display:none">← Back</button>
+    <button class="main" id="play" style="display:none">Next: choose level ▶</button>
+    <div id="ach" style="font-size:13px;opacity:.85;line-height:1.6"></div>
+  </div>
+  <div id="over" class="screen" style="display:none">
+    <h1 style="font-size:48px">GAME OVER</h1>
+    <p id="overStats"></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button class="main" id="retry">Try again</button>
+      <button class="ghost" id="overMenu">Menu</button>
+    </div>
+  </div>
+  <div id="end" class="screen" style="display:none">
+    <h1 style="font-size:48px">LEVEL CLEAR</h1>
+    <p id="stats"></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button class="main" id="again">Play again</button>
+      <button class="ghost" id="share">Share 📤</button>
+      <button class="ghost" id="menuBtn">Menu</button>
+    </div>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

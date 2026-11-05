@@ -1,0 +1,38 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#07040f;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
+body{display:flex;align-items:center;justify-content:center}
+#wrap{position:relative;width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9}
+canvas{width:100%;height:100%;display:block;border-radius:8px}
+#hud{position:absolute;top:10px;left:14px;right:14px;display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:clamp(12px,2.2vw,16px);text-shadow:0 0 8px #000;pointer-events:none}
+#toast{position:absolute;top:20%;left:50%;transform:translateX(-50%);font-weight:900;font-size:clamp(15px,3vw,24px);text-align:center;opacity:0;transition:opacity .3s;pointer-events:none;text-shadow:0 0 12px #ff4fd8;white-space:nowrap}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(7,4,15,.92);padding:20px;text-align:center;border-radius:8px}
+h1{font-size:clamp(34px,8vw,60px);font-weight:900;line-height:1;background:linear-gradient(90deg,#ff4fd8,#6ee7ff,#c4ff4f);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{opacity:.85;font-size:clamp(13px,2vw,16px);max-width:460px;line-height:1.4}
+.cards{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.card{width:160px;padding:12px;border-radius:14px;border:2px solid #fff3;background:#150c28;color:#fff;font:inherit;text-align:left;cursor:pointer}
+.card.sel{border-color:#c4ff4f;box-shadow:0 0 16px rgba(196,255,79,.5)}
+.card b{display:block;font-size:16px;margin-bottom:4px}
+.card small{opacity:.75;font-size:12px;line-height:1.3}
+button.main{font:inherit;font-weight:800;font-size:18px;padding:12px 30px;border:0;border-radius:999px;background:#c4ff4f;color:#07040f;cursor:pointer}
+button.ghost{font:inherit;font-weight:700;font-size:15px;padding:9px 20px;border-radius:999px;background:transparent;color:#fff;border:2px solid #fff4;cursor:pointer}
+#touch{position:absolute;bottom:10px;left:0;right:0;display:none;justify-content:space-between;padding:0 14px;pointer-events:none}
+#touch button{pointer-events:auto;width:76px;height:76px;border-radius:50%;border:2px solid #fff5;background:#0009;color:#fff;font:inherit;font-weight:800;font-size:14px}
+#touch .j{width:96px;height:96px;background:#c4ff4f55}
+#menu{position:fixed;inset:0;z-index:20;overflow-y:auto;justify-content:safe center;padding:20px}
+#menu.landing{background:linear-gradient(-45deg,#07040f,#1a0b33,#0d2a25,#07040f);background-size:400% 400%;animation:bgshift 12s ease infinite}
+@keyframes bgshift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+#leaves{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+#mute{position:static!important;pointer-events:auto}
+#menu:not(.landing) #leaves{display:none}
+#menu > *:not(#leaves){position:relative;z-index:1}
+.leaf{position:absolute;top:-30px;width:10px;height:14px;border-radius:0 80% 0 80%;opacity:.7;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(560px) rotate(360deg)}}
+.logo{font-size:clamp(34px,8vw,68px);font-weight:900;letter-spacing:3px;line-height:1.05;display:flex;flex-wrap:wrap;justify-content:center;font-family:"Arial Black",Impact,system-ui,sans-serif}
+.logo span{display:inline-block;color:#fff;text-shadow:3px 3px 0 #ff4fd8,-3px -3px 0 #6ee7ff;animation:drop .6s cubic-bezier(.3,1.6,.5,1) both,wobble 3s ease-in-out infinite;animation-delay:calc(var(--i)*.08s),calc(var(--i)*.2s)}
+.logo span:nth-child(3n){color:#c4ff4f}
+.logo .sp{width:22px;animation:none}
+.logo.jit{animation:jitter .3s steps(3)}
+@keyframes drop{from{transform:translateY(-140px) scale(.4);opacity:0}to{transform:none;opacity:1}}
+@keyframes wobble{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes jitter{0%{transform:translate(0)}25%{transform:translate(-4px,1px) skewX(-8deg)}50%{transform:translate(4px,-1px)}75%{transform:translate(-2px,2px)}100%{transform:translate(0)}}
+@media (pointer:coarse){#touch{display:flex}}
